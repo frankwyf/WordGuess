@@ -1,0 +1,146 @@
+// Build script for WordGuess
+
+plugins {
+  id 'java'
+  id 'checkstyle'
+  id 'application'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(26)
+  }
+}
+
+jar {
+  manifest {
+    attributes(
+      'Main-Class': 'wordguess.Wordle'
+    )
+  }
+}
+
+tasks.register('uberJar', Jar) {
+  group = 'distribution'
+  description = 'Builds a self-contained runnable JAR with dependencies.'
+  archiveClassifier = 'all'
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+  manifest {
+    attributes(
+      'Main-Class': 'wordguess.Wordle'
+    )
+  }
+
+  from sourceSets.main.output
+  dependsOn configurations.runtimeClasspath
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
+
+tasks.register('packageApp') {
+  group = 'distribution'
+  description = 'Builds standard app distributions and a runnable uber JAR.'
+  dependsOn 'build', 'installDist', 'distZip', 'distTar', 'uberJar'
+}
+
+// Library dependencies
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation('org.jfree:jfreechart:1.0.19')
+  testImplementation(platform('org.junit:junit-bom:5.13.4'))
+  testImplementation (
+    'org.junit.jupiter:junit-jupiter-api',
+    'org.hamcrest:hamcrest:2.2'
+  )
+  testRuntimeOnly (
+    'org.junit.jupiter:junit-jupiter-engine',
+    'org.junit.platform:junit-platform-launcher'
+  )
+}
+
+// Unit testing
+
+test {
+  useJUnitPlatform()
+
+  testLogging {
+    events 'PASSED', 'FAILED', 'SKIPPED'
+  }
+}
+
+// Style checking
+
+checkstyle {
+  showViolations = false
+}
+
+task style {
+  group = 'verification'
+  description = 'Runs checkstyle on project code.'
+  dependsOn checkstyleMain
+}
+
+// Running the application
+
+application {
+  mainClass = 'wordguess.Wordle'
+  run {
+    description = 'Runs a game of Wordle using today\'s word.'
+    standardInput = System.in
+    doFirst {
+      print "\n"
+      println "----------------------------------------------------------------"
+    }
+  }
+}
+
+//run accessibility mode without specifying the game number
+task runAccesbility(type: JavaExec) {
+  group = 'application'
+  description = 'Runs today\'s game in accessibility mode.'
+  standardInput = System.in
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = application.mainClass
+  args '-a'
+  doFirst {
+    println "\nRunning with accessibility model of Wordle using today\'s word."
+    println "----------------------------------------------------------------"
+  }
+}
+
+task runFixed(type: JavaExec) {
+  group = 'application'
+  description = 'Runs a fixed game number for demos and tests.'
+  standardInput = System.in
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = application.mainClass
+  args '12'
+  doFirst {
+    println "\nRunning with 100 as a command line argument"
+    println "(Target word for Game 12 is model)\n"
+    println "----------------------------------------------------------------"
+  }
+}
+
+// Running in accessibility mode
+
+task runFixedAccesbility(type: JavaExec) {
+  group = 'application'
+  description = 'Runs a fixed game number in accessibility mode.'
+  standardInput = System.in
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = application.mainClass
+  args '-a','236'
+  doFirst {
+    println "\nRunning with accessibility model, the target word is specified in second command line argument"
+    println "(Target word for Game 236 is PAUSE)\n"
+    println "----------------------------------------------------------------"
+  }
+}
+

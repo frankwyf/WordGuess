@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Gradle: test (JDK26)",
+      "type": "shell",
+      "command": "$env:JAVA_HOME='C:\\Program Files\\Java\\jdk-26.0.1'; $env:Path=\"$env:JAVA_HOME\\bin;$env:Path\"; .\\gradlew.bat clean test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Gradle: runFixed (JDK26)",
+      "type": "shell",
+      "command": "$env:JAVA_HOME='C:\\Program Files\\Java\\jdk-26.0.1'; $env:Path=\"$env:JAVA_HOME\\bin;$env:Path\"; .\\gradlew.bat runFixed",
+      "problemMatcher": []
+    },
+    {
+      "label": "Java: run built game jar (JDK26)",
+      "type": "shell",
+      "command": "$env:JAVA_HOME='C:\\Program Files\\Java\\jdk-26.0.1'; $env:Path=\"$env:JAVA_HOME\\bin;$env:Path\"; java -jar .\\build\\libs\\wordguess-all.jar 12",
+      "problemMatcher": []
+    }
+  ]
+}

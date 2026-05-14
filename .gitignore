@@ -1,0 +1,32 @@
+# Gradle
+.gradle/
+build/
+
+# Java build output
+out/
+bin/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code local settings
+.vscode/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Runtime/generated files
+*.tmp
+*.swp
+
+# Release/package artifacts
+*.zip
+*.tar
