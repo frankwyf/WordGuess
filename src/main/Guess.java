@@ -1,5 +1,3 @@
-package wordguess;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -168,7 +166,7 @@ public class Guess {
       }
     }
     //add the message
-    if (miss.size()!=0){
+    if (!miss.isEmpty()){
       //the last position end with no ", "
       out=out.substring(0,out.length()-2);
       out+=" correct but in wrong place; ";
@@ -192,7 +190,7 @@ public class Guess {
       }
     }
     //add the message
-    if (correct.size()!=0){
+    if (!correct.isEmpty()){
       //the last position end with no ", "
       out=out.substring(0,out.length()-2);
       out+=" perfect; ";
@@ -216,7 +214,7 @@ public class Guess {
       }
     }
     //add the message
-    if (wrong.size()!=0){
+    if (!wrong.isEmpty()){
       //the last position end with no ", "
       out=out.substring(0,out.length()-2);
       out+=" wrong.";
@@ -251,7 +249,6 @@ public class Guess {
 
   // TODO: Implement matches(), giving it a String parameter and boolean return type
   public boolean matches(String target){
-    if (chosenWord.equals(target)){return true;}
-    return false;
+    return chosenWord.equals(target);
   }
 }

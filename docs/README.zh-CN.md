@@ -1,5 +1,8 @@
 # WordGuess（中文说明）
 
+[![CI](https://github.com/frankwyf/WordGuess/actions/workflows/ci.yml/badge.svg)](https://github.com/frankwyf/WordGuess/actions/workflows/ci.yml)
+[![Release](https://github.com/frankwyf/WordGuess/actions/workflows/release.yml/badge.svg)](https://github.com/frankwyf/WordGuess/actions/workflows/release.yml)
+
 WordGuess 是一个基于终端的猜词小游戏，灵感来自 Wordle。
 
 这个项目是一个开源猜词游戏，并用于个人作品集展示。
@@ -37,6 +40,14 @@ java -version
 .\gradlew.bat runFixed
 ```
 
+5. 构建发布产物
+
+```powershell
+.\gradlew.bat packageApp
+```
+
+推送类似 `v0.1.0` 的 Git 标签后，会自动触发 GitHub Release 发布流程。
+
 ## VS Code 使用建议
 
 - 可直接运行 `.vscode/tasks.json` 中预设任务。
@@ -44,9 +55,16 @@ java -version
 
 ## 目录说明
 
-- 源码：`src/main/java/wordguess`
-- 测试：`src/test/java/wordguess`
+- 源码：`src/main`
+- 测试：`src/test`
 - 词库：`data/words.txt`
+- GitHub 自动化：`.github/workflows`
+
+## 自动化
+
+- CI 会在 push 和 pull request 时自动执行构建、测试和打包。
+- Release 流水线会在推送版本标签时自动发布产物。
+- Dependabot 会自动检查 GitHub Actions 依赖更新。
 
 ## 开源协作
 

@@ -1,16 +1,16 @@
 // Correctness tests for WordList
 
-package wordguess;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ public class WordListTests {
   public void missingFile() {
     Throwable t = assertThrows(
       IOException.class, () -> new WordList("non-existent-file.txt"));
-    assertThat(t.getClass(), anyOf(is(FileNotFoundException.class), is(NoSuchFileException.class)));
+    assertTrue(t instanceof FileNotFoundException || t instanceof NoSuchFileException);
   }
 
   @Test

@@ -20,6 +20,8 @@ git tag -a v0.1.0 -m "WordGuess v0.1.0"
 git push origin v0.1.0
 ```
 
+Pushing a `v*` tag triggers `.github/workflows/release.yml`, which builds the application and publishes the packaged artifacts to GitHub Releases automatically.
+
 ## GitHub Release Notes
 
 Recommended sections:
@@ -28,3 +30,7 @@ Recommended sections:
 - Fixes
 - Known issues
 - Checksums/artifacts
+
+## Release Template
+
+The repository includes a GitHub release template at `.github/release.yml` so new releases start with consistent notes and categories.

@@ -1,5 +1,3 @@
-package wordguess;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
@@ -32,12 +30,12 @@ import org.jfree.ui.TextAnchor;
 
 
 public class Game {
-  private int gameNumber;
-  private String target;
+  private final int gameNumber;
+  private final String target;
   private String success="Fail";
   private int finalGuess;
-  private List<String> summary= new ArrayList<>();
-  private int [] count=new int [6];
+  private final List<String> summary= new ArrayList<>();
+  private final int [] count=new int [6];
   // TODO: Implement constructor with String parameter
   Game(String filename) throws IOException{
     //get the difference of days
@@ -89,7 +87,7 @@ public class Game {
           try {
             temp.readFromPlayer();
             correction=false;
-          } catch (GameException w) {
+          } catch (GameException invalidInputException) {
             //TODO: handle repeated invalid user input
             System.out.println("Invalid input!(Only five letter words is allowed)");
             //out of trial times
@@ -169,7 +167,7 @@ public class Game {
           try {
             temp.readFromPlayer();
             correction=false;
-          } catch (GameException w) {
+          } catch (GameException invalidInputException) {
             //TODO: handle repeated invalid user input
             System.out.println("Invalid input!(Only five letter words is allowed)");
             //out of trial times
@@ -212,18 +210,14 @@ public class Game {
   // TODO: Implement save() method, with a String parameter
   public void save(String filename){
     File record=new File(filename);
-    PrintWriter save;
-    try {
-      save=new PrintWriter(record);
+    try (PrintWriter save = new PrintWriter(record)) {
       int j;
       for (j=0;j<this.summary.size();j++){
         //write in the summary
         save.println(this.summary.get(j));
       }
-      //close the file
-      save.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Failed to save game summary.");
     }
   }
 
@@ -235,30 +229,19 @@ public class Game {
     if (!save.exists()){
       try {
         save.createNewFile();
-      } catch (Exception e) {
+      } catch (IOException e) {
         //TODO: create history.txt if not exists
-        e.printStackTrace();
+        System.out.println("Failed to create history file.");
       }
     }
-    FileWriter h=null;
-    try {
-      //open the file in adding model
-      h=new FileWriter(save,true);
+    try (FileWriter writer = new FileWriter(save, true);
+         PrintWriter output = new PrintWriter(writer)) {
+      output.println(record);
+      output.flush();
+      writer.flush();
     } catch (IOException e) {
-      e.printStackTrace();
-    }
-    PrintWriter in=new PrintWriter(h);
-    //write in the record
-    in.println(record);
-    in.flush();
-    try {
-      h.flush();
-      in.close();
-      h.close();
-    } catch (Exception e) {
       //fail to store the record
-      System.out.println("Fail to close output stream/file! Record lost.");
-      e.printStackTrace();
+      System.out.println("Fail to write history record.");
     }
   }
   //TODO:display the history of games
@@ -271,7 +254,6 @@ public class Game {
     } catch (IOException e) {
       //TODO: handle IOException
       System.out.println("History file error.");
-      e.printStackTrace();
     }
     //Display the number of games been played
     int numberOfgames=show.size();
@@ -338,7 +320,9 @@ public class Game {
       //get the max value in allWinstreaks
       for (Integer temp:allWinstreaks){
         //get the maximum value in allWinstreaks
-        longest=longest>temp ? longest:temp;
+        if (temp != null) {
+          longest = Math.max(longest, temp);
+        }
       }
       System.out.println("Longest winning streak is: "+longest+".");
     }
@@ -356,24 +340,14 @@ public class Game {
     //count the occurrence of each guess number,store in integer array count
     for (loop=0;loop<allGuess.size();loop++){
       switch (allGuess.get(loop)) {
-        case 1:
-          count[0]++;
-          break;
-        case 2:
-          count[1]++;
-          break;
-        case 3:
-          count[2]++;
-          break;
-        case 4:
-          count[3]++;
-          break;
-        case 5:
-          count[4]++;
-          break;
-        case 6:
-          count[5]++;
-          break;
+        case 1 -> count[0]++;
+        case 2 -> count[1]++;
+        case 3 -> count[2]++;
+        case 4 -> count[3]++;
+        case 5 -> count[4]++;
+        case 6 -> count[5]++;
+        default -> {
+        }
       }
     }
     // draw the histogram on terminal
@@ -431,7 +405,7 @@ public class Game {
         this.setContentPane(new ChartPanel(chart)); 
     }
 
-    public JFreeChart createChart() {
+    private JFreeChart createChart() {
         JFreeChart chart = ChartFactory.createBarChart3D(
                 // title
                 "Histogram of guess distribution", 
@@ -472,7 +446,7 @@ public class Game {
         return chart;
     }
     // build the dataset
-    public CategoryDataset getDataSet() {
+    private CategoryDataset getDataSet() {
       //create the bar chart
       DefaultCategoryDataset dataset = new DefaultCategoryDataset();
       dataset.addValue(count[0], "", "1");
@@ -485,7 +459,7 @@ public class Game {
     }
     public class CustomRender extends org.jfree.chart.renderer.category.IntervalBarRenderer{
       //set the color for bars
-      private Paint[] colors;
+      private final Paint[] colors;
 
       public CustomRender(){
         String[] colorValues = {"#008000", "#5F9EA0", "#FFA500", "#FF69B4", "#DC143C", "#800000"};

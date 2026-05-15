@@ -1,7 +1,5 @@
 // Main program entry point for WordGuess
 
-package wordguess;
-
 import java.io.IOException;
 
 

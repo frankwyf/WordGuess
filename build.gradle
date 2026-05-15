@@ -12,10 +12,23 @@ java {
   }
 }
 
+sourceSets {
+  main {
+    java {
+      srcDirs = ['src/main']
+    }
+  }
+  test {
+    java {
+      srcDirs = ['src/test']
+    }
+  }
+}
+
 jar {
   manifest {
     attributes(
-      'Main-Class': 'wordguess.Wordle'
+      'Main-Class': 'Wordle'
     )
   }
 }
@@ -28,7 +41,7 @@ tasks.register('uberJar', Jar) {
 
   manifest {
     attributes(
-      'Main-Class': 'wordguess.Wordle'
+      'Main-Class': 'Wordle'
     )
   }
 
@@ -89,7 +102,7 @@ task style {
 // Running the application
 
 application {
-  mainClass = 'wordguess.Wordle'
+  mainClass = 'Wordle'
   run {
     description = 'Runs a game of Wordle using today\'s word.'
     standardInput = System.in

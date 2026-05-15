@@ -1,19 +1,19 @@
 // Correctness tests for Guess
 
-package comp1721.cwk1;
 
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 
 public class GuessTests {
-  private Guess g1, g2;
+  private Guess g1;
+  private Guess g2;
 
   @BeforeEach
   public void perTestSetup() {
@@ -74,7 +74,10 @@ public class GuessTests {
     assertThat(
       "AGILE compared with SPORT",
       g1.compareWith("SPORT"),
-      is("\033[30;107m A \033[0m\033[30;107m G \033[0m\033[30;107m I \033[0m\033[30;107m L \033[0m\033[30;107m E \033[0m")
+      is(
+        "\033[30;107m A \033[0m\033[30;107m G \033[0m\033[30;107m I \033[0m"
+          + "\033[30;107m L \033[0m\033[30;107m E \033[0m"
+      )
     );
   }
 
@@ -84,7 +87,10 @@ public class GuessTests {
     assertThat(
       "AGILE compared with AGILE",
       g1.compareWith("AGILE"),
-      is("\033[30;102m A \033[0m\033[30;102m G \033[0m\033[30;102m I \033[0m\033[30;102m L \033[0m\033[30;102m E \033[0m")
+      is(
+        "\033[30;102m A \033[0m\033[30;102m G \033[0m\033[30;102m I \033[0m"
+          + "\033[30;102m L \033[0m\033[30;102m E \033[0m"
+      )
     );
   }
 
@@ -94,7 +100,10 @@ public class GuessTests {
     assertThat(
       "SPORT compared with PORTS",
       g2.compareWith("PORTS"),
-      is("\033[30;103m S \033[0m\033[30;103m P \033[0m\033[30;103m O \033[0m\033[30;103m R \033[0m\033[30;103m T \033[0m")
+      is(
+        "\033[30;103m S \033[0m\033[30;103m P \033[0m\033[30;103m O \033[0m"
+          + "\033[30;103m R \033[0m\033[30;103m T \033[0m"
+      )
     );
   }
 
@@ -105,7 +114,10 @@ public class GuessTests {
     assertThat(
       "SOUPS compared with PAUSE",
       g.compareWith("PAUSE"),
-      is("\033[30;103m S \033[0m\033[30;107m O \033[0m\033[30;102m U \033[0m\033[30;103m P \033[0m\033[30;107m S \033[0m")
+      is(
+        "\033[30;103m S \033[0m\033[30;107m O \033[0m\033[30;102m U \033[0m"
+          + "\033[30;103m P \033[0m\033[30;107m S \033[0m"
+      )
     );
   }
 }

@@ -1,5 +1,8 @@
 # WordGuess（日本語ドキュメント）
 
+[![CI](https://github.com/frankwyf/WordGuess/actions/workflows/ci.yml/badge.svg)](https://github.com/frankwyf/WordGuess/actions/workflows/ci.yml)
+[![Release](https://github.com/frankwyf/WordGuess/actions/workflows/release.yml/badge.svg)](https://github.com/frankwyf/WordGuess/actions/workflows/release.yml)
+
 WordGuess は、Wordle に着想を得たターミナルベースの単語推測ゲームです。
 
 このプロジェクトは、オープンソースのポートフォリオ用ゲームとして公開されています。
@@ -37,6 +40,14 @@ java -version
 .\gradlew.bat runFixed
 ```
 
+5. リリース成果物をビルド
+
+```powershell
+.\gradlew.bat packageApp
+```
+
+`v0.1.0` のようなタグを push すると、GitHub Release の自動公開パイプラインが実行されます。
+
 ## VS Code での利用
 
 - `.vscode/tasks.json` のタスクをそのまま実行できます。
@@ -44,9 +55,16 @@ java -version
 
 ## ディレクトリ構成
 
-- ソースコード: `src/main/java/wordguess`
-- テスト: `src/test/java/wordguess`
+- ソースコード: `src/main`
+- テスト: `src/test`
 - 単語データ: `data/words.txt`
+- GitHub 自動化: `.github/workflows`
+
+## 自動化
+
+- CI は push と pull request ごとにビルド、テスト、パッケージングを実行します。
+- Release ワークフローはバージョンタグ push 時に成果物を公開します。
+- Dependabot は GitHub Actions の依存関係更新を追跡します。
 
 ## コントリビューション
 

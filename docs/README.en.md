@@ -1,5 +1,8 @@
 # WordGuess (English Docs)
 
+[![CI](https://github.com/frankwyf/WordGuess/actions/workflows/ci.yml/badge.svg)](https://github.com/frankwyf/WordGuess/actions/workflows/ci.yml)
+[![Release](https://github.com/frankwyf/WordGuess/actions/workflows/release.yml/badge.svg)](https://github.com/frankwyf/WordGuess/actions/workflows/release.yml)
+
 WordGuess is a terminal-based word guessing game inspired by Wordle.
 
 The project is maintained as an open-source portfolio project.
@@ -37,6 +40,14 @@ java -version
 .\gradlew.bat runFixed
 ```
 
+5. Build release artifacts
+
+```powershell
+.\gradlew.bat packageApp
+```
+
+Push a tag such as `v0.1.0` to trigger the automated GitHub Release pipeline.
+
 ## VS Code Tips
 
 - You can run predefined tasks from `.vscode/tasks.json`.
@@ -44,9 +55,16 @@ java -version
 
 ## Project Layout
 
-- Source code: `src/main/java/wordguess`
-- Unit tests: `src/test/java/wordguess`
+- Source code: `src/main`
+- Unit tests: `src/test`
 - Word data: `data/words.txt`
+- GitHub workflows: `.github/workflows`
+
+## Automation
+
+- CI validates build, test, and packaging on pushes and pull requests.
+- Release automation publishes packaged artifacts on version tags.
+- Dependabot keeps GitHub Actions dependencies up to date.
 
 ## Contributing
 

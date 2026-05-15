@@ -1,5 +1,3 @@
-package wordguess;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class WordList {
-  private List<String> words;
+  private final List<String> words;
   // TODO: Implement constructor with a String parameter
   WordList(String filename) throws IOException {
     Path file= Paths.get(filename);
