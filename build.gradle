@@ -6,6 +6,13 @@ plugins {
   id 'application'
 }
 
+def packageVersion = (providers.gradleProperty('appVersion')
+  .orElse(System.getenv('APP_VERSION') ?: '0.1.2')
+  .get()
+  .replaceFirst(/^v/, ''))
+
+version = packageVersion
+
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of(26)
@@ -56,6 +63,50 @@ tasks.register('packageApp') {
   group = 'distribution'
   description = 'Builds standard app distributions and a runnable uber JAR.'
   dependsOn 'build', 'installDist', 'distZip', 'distTar', 'uberJar'
+}
+
+tasks.register('prepareJpackageInput', Sync) {
+  group = 'distribution'
+  description = 'Copies application jars into a jpackage input directory.'
+  dependsOn 'jar'
+
+  into layout.buildDirectory.dir('jpackage/input')
+  from(jar.archiveFile)
+  from(configurations.runtimeClasspath)
+}
+
+tasks.register('packageWindowsAppImage', Exec) {
+  group = 'distribution'
+  description = 'Builds a Windows app-image with a native WordGuess.exe launcher.'
+  dependsOn 'prepareJpackageInput'
+  onlyIf { org.gradle.internal.os.OperatingSystem.current().isWindows() }
+
+  doFirst {
+    def outputDir = layout.buildDirectory.dir('native/windows').get().asFile
+    outputDir.mkdirs()
+
+    commandLine 'jpackage',
+      '--type', 'app-image',
+      '--dest', outputDir.absolutePath,
+      '--input', layout.buildDirectory.dir('jpackage/input').get().asFile.absolutePath,
+      '--name', 'WordGuess',
+      '--main-jar', jar.archiveFileName.get(),
+      '--main-class', application.mainClass.get(),
+      '--app-version', packageVersion,
+      '--vendor', 'frankwyf',
+      '--win-console'
+  }
+}
+
+tasks.register('packageWindowsExeZip', Zip) {
+  group = 'distribution'
+  description = 'Builds a zip bundle containing the native Windows WordGuess.exe launcher.'
+  dependsOn 'packageWindowsAppImage'
+  onlyIf { org.gradle.internal.os.OperatingSystem.current().isWindows() }
+
+  archiveFileName = 'WordGuess-windows.zip'
+  destinationDirectory = layout.buildDirectory.dir('native/windows')
+  from(layout.buildDirectory.dir('native/windows/WordGuess'))
 }
 
 // Library dependencies
