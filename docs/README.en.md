@@ -46,7 +46,19 @@ java -version
 .\gradlew.bat packageApp
 ```
 
+6. Build the native Windows double-click bundle
+
+```powershell
+.\gradlew.bat packageWindowsExeZip
+```
+
 Push a tag such as `v0.1.0` to trigger the automated GitHub Release pipeline.
+
+## Download Recommendation
+
+- Windows users should download `WordGuess-windows.zip`
+- Extract it and launch `WordGuess.exe`
+- If you prefer the Java-based option, use `wordguess-all.jar`
 
 ## VS Code Tips
 
@@ -63,7 +75,7 @@ Push a tag such as `v0.1.0` to trigger the automated GitHub Release pipeline.
 ## Automation
 
 - CI validates build, test, and packaging on pushes and pull requests.
-- Release automation publishes packaged artifacts on version tags.
+- Release automation publishes packaged artifacts, including the Windows native bundle, on version tags.
 - Dependabot keeps GitHub Actions dependencies up to date.
 
 ## Contributing

@@ -16,18 +16,20 @@ This project is maintained as an open-source portfolio game.
 
 - Terminal-first Wordle-style gameplay with standard and accessibility modes.
 - Java 26 + Gradle 9.4 build with automated CI and release packaging.
-- Downloadable release artifacts for both a runnable uber JAR and a ZIP app bundle.
+- Downloadable release artifacts for Windows native launch, standard Java bundles, and a runnable uber JAR.
 
 ## Features
 
 - Daily puzzle mode and fixed puzzle mode for demos, tests, and portfolio screenshots.
 - Accessibility mode with text-based positional hints instead of color-only feedback.
 - Local history tracking plus simple win-rate and streak statistics.
-- Release-ready packaging: runnable uber JAR and zipped app distribution.
+- Release-ready packaging: Windows native bundle, zipped app distribution, and runnable uber JAR.
 
 ## Download Latest Release
 
 - Latest release page: [github.com/frankwyf/WordGuess/releases/latest](https://github.com/frankwyf/WordGuess/releases/latest)
+- Windows users: [WordGuess-windows.zip](https://github.com/frankwyf/WordGuess/releases/latest/download/WordGuess-windows.zip)
+- After extracting `WordGuess-windows.zip`, launch `WordGuess.exe`
 - Direct download, uber JAR: [wordguess-all.jar](https://github.com/frankwyf/WordGuess/releases/latest/download/wordguess-all.jar)
 - Direct download, app bundle: [wordguess.zip](https://github.com/frankwyf/WordGuess/releases/latest/download/wordguess.zip)
 
@@ -50,6 +52,12 @@ Run the packaged JAR:
 ```powershell
 java -jar .\build\libs\wordguess-all.jar 12
 ```
+
+Windows double-click option:
+
+- Download `WordGuess-windows.zip`
+- Extract it
+- Double-click `WordGuess.exe`
 
 ## Terminal Session
 
@@ -127,6 +135,7 @@ For a versioned public release, push a Git tag such as `v0.1.0`. GitHub Actions 
 
 Artifacts:
 
+- Windows native bundle (recommended for Windows): `build/native/windows/WordGuess-windows.zip`
 - Standard app bundle (recommended): `build/distributions/wordguess.zip`
 - Self-contained JAR: `build/libs/wordguess-all.jar`
 

@@ -46,7 +46,19 @@ java -version
 .\gradlew.bat packageApp
 ```
 
+6. 构建 Windows 原生可双击版本
+
+```powershell
+.\gradlew.bat packageWindowsExeZip
+```
+
 推送类似 `v0.1.0` 的 Git 标签后，会自动触发 GitHub Release 发布流程。
+
+## 下载建议
+
+- Windows 用户优先下载 `WordGuess-windows.zip`
+- 解压后直接双击 `WordGuess.exe`
+- 如果你更希望用通用 Java 方式运行，再选择 `wordguess-all.jar`
 
 ## VS Code 使用建议
 
@@ -63,7 +75,7 @@ java -version
 ## 自动化
 
 - CI 会在 push 和 pull request 时自动执行构建、测试和打包。
-- Release 流水线会在推送版本标签时自动发布产物。
+- Release 流水线会在推送版本标签时自动发布产物，包括 Windows 原生包。
 - Dependabot 会自动检查 GitHub Actions 依赖更新。
 
 ## 开源协作

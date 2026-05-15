@@ -46,7 +46,19 @@ java -version
 .\gradlew.bat packageApp
 ```
 
+6. Windows ネイティブ版をビルド
+
+```powershell
+.\gradlew.bat packageWindowsExeZip
+```
+
 `v0.1.0` のようなタグを push すると、GitHub Release の自動公開パイプラインが実行されます。
+
+## ダウンロードのおすすめ
+
+- Windows ユーザーは `WordGuess-windows.zip` を優先してください
+- 展開後に `WordGuess.exe` をダブルクリックして起動できます
+- Java ベースの配布物を使いたい場合は `wordguess-all.jar` を選んでください
 
 ## VS Code での利用
 
@@ -63,7 +75,7 @@ java -version
 ## 自動化
 
 - CI は push と pull request ごとにビルド、テスト、パッケージングを実行します。
-- Release ワークフローはバージョンタグ push 時に成果物を公開します。
+- Release ワークフローはバージョンタグ push 時に成果物を公開し、Windows ネイティブ版も含めます。
 - Dependabot は GitHub Actions の依存関係更新を追跡します。
 
 ## コントリビューション

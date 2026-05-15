@@ -9,7 +9,8 @@ Use Semantic Versioning: `MAJOR.MINOR.PATCH`.
 1. `./gradlew clean test` passes.
 2. `./gradlew packageApp` succeeds.
 3. `build/distributions/wordguess.zip` and `build/libs/wordguess-all.jar` are generated.
-4. `CHANGELOG.md` is updated.
+4. On Windows, `./gradlew.bat packageWindowsExeZip` succeeds and `build/native/windows/WordGuess-windows.zip` is generated.
+5. `CHANGELOG.md` is updated.
 
 ## Tagging
 
@@ -30,6 +31,11 @@ Recommended sections:
 - Fixes
 - Known issues
 - Checksums/artifacts
+
+Recommended download wording:
+
+- Windows users: download `WordGuess-windows.zip` and run `WordGuess.exe`
+- Cross-platform Java users: download `wordguess-all.jar`
 
 ## Release Template
 
