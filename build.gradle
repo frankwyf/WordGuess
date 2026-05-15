@@ -32,6 +32,16 @@ sourceSets {
   }
 }
 
+distributions {
+  main {
+    contents {
+      from('data') {
+        into 'data'
+      }
+    }
+  }
+}
+
 jar {
   manifest {
     attributes(
@@ -83,6 +93,7 @@ tasks.register('packageWindowsAppImage', Exec) {
 
   doFirst {
     def outputDir = layout.buildDirectory.dir('native/windows').get().asFile
+    delete outputDir
     outputDir.mkdirs()
 
     commandLine 'jpackage',
@@ -95,6 +106,13 @@ tasks.register('packageWindowsAppImage', Exec) {
       '--app-version', packageVersion,
       '--vendor', 'frankwyf',
       '--win-console'
+  }
+
+  doLast {
+    copy {
+      from('data')
+      into layout.buildDirectory.dir('native/windows/WordGuess/data').get().asFile
+    }
   }
 }
 
